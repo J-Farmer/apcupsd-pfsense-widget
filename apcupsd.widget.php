@@ -1,4 +1,4 @@
-<?php
+d<?php
 
 /*
  * apcupsd.widget.php
@@ -49,19 +49,26 @@ if ($_REQUEST['ajax']) {
 <table class="table table-hover table-striped table-condensed">
 	<tbody>
 		<tr>
-			<td>Status</td><td><span id="apcupsd_apcaccess_status"></span></td>
+			<td>Status</td>
+			<td><span id="apcupsd_apcaccess_status"></span></td>
 		</tr>
 		<tr>
-			<td>Line Voltage</td><td><span id="apcupsd_apcaccess_line_v"></span></td>
+			<td>Line Voltage</td>
+			<td><span id="apcupsd_apcaccess_line_v"></span></td>
 		</tr>
 		<tr>
-			<td>Load</td><td>
+			<td>Load</td>
+			<td>
 				<div class="progress">
 					<div id="apcupsd_load_meter" class="progress-bar progress-bar-striped progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
 					</div>
 				</div>
 				<span id="apcupsd_load_val"></span>
 			</td>
+		</tr>
+		<tr>
+		<td>Load (Watts)</td>
+		<td><span id = "apcupsd_apcaccess_load"></span></td>
 		</tr>
 		<tr>
 			<td>Battery Charge</td><td>
@@ -73,10 +80,12 @@ if ($_REQUEST['ajax']) {
 			</td>
 		</tr>
 		<tr>
-			<td>Time Remaining</td><td><span id="apcupsd_apcaccess_time_remaining"></span></td>
+			<td>Time Remaining</td>
+			<td><span id="apcupsd_apcaccess_time_remaining"></span></td>
 		</tr>
 		<tr>
-			<td>Battery Age</td><td><span id="apcupsd_apcaccess_bat_age"></span></td>
+			<td>Battery Age</td>
+			<td><span id="apcupsd_apcaccess_bat_age"></span></td>
 		</tr>
 	</tbody>
 </table>
@@ -106,6 +115,9 @@ function update_apcupsd_result(results) {
 			if (results.BCHARGE!=undefined) {
 				setProgress('apcupsd_bcharge_meter', parseInt(results.BCHARGE));
 				$('#apcupsd_bcharge_val').html('<i class="fa fa-battery-full"/>&nbsp;'+results.BCHARGE);
+			}
+			if (results.LOADPCT!=undefined && results.NOMPOWER != undefined) {
+				$("#apcupsd_apcaccess_load").html(parseFloat(results.NOMPOWER) * (parseFloat(results.LOADPCT) / 100));
 			}
 			if (results.TIMELEFT!=undefined) {
 				$('#apcupsd_apcaccess_time_remaining').html('<i class="fa fa-clock-o"/>&nbsp;'+results.TIMELEFT);
